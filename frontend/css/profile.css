@@ -1,0 +1,190 @@
+/* ============================================
+   Enigma — Profile CSS
+   ============================================ */
+
+/* ─── Profile panel (right sidebar) ─────── */
+.profile-panel {
+  width: 320px;
+  flex-shrink: 0;
+  background: var(--bg2);
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transform: translateX(320px);
+  transition: transform var(--tr-slow);
+}
+.profile-panel.open { transform: translateX(0); }
+
+.profile-panel-header {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 18px 18px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.profile-panel-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+}
+
+.profile-panel-body {
+  flex: 1; overflow-y: auto;
+  padding: 0;
+}
+
+/* ─── Profile hero ───────────────────────── */
+.profile-hero {
+  padding: 24px 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--border3);
+}
+
+.profile-avatar-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.profile-avatar-edit {
+  position: absolute; bottom: 4px; right: 4px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--text-inv);
+  border: 2px solid var(--bg2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all var(--tr);
+}
+.profile-avatar-edit:hover { background: var(--accent2); transform: scale(1.1); }
+.profile-avatar-edit svg { width: 13px; height: 13px; }
+
+.profile-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem; font-weight: 700;
+  margin-bottom: 4px;
+}
+.profile-nickname { font-size: 0.82rem; color: var(--accent); margin-bottom: 6px; }
+.profile-status-text { font-size: 0.78rem; color: var(--text3); }
+
+.profile-actions {
+  display: flex; gap: 8px; justify-content: center;
+  margin-top: 14px;
+}
+
+/* ─── Profile info rows ──────────────────── */
+.profile-section {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border3);
+}
+.profile-section-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+
+.profile-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0;
+}
+.profile-row-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: var(--bg4);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.profile-row-icon svg { width: 16px; height: 16px; color: var(--accent); }
+.profile-row-label { font-size: 0.72rem; color: var(--text3); margin-bottom: 1px; }
+.profile-row-value { font-size: 0.85rem; color: var(--text); }
+
+/* ─── Edit profile page ──────────────────── */
+.profile-edit-page {
+  min-height: 100vh; overflow-y: auto;
+  padding: 40px;
+  max-width: 600px; margin: 0 auto;
+}
+
+.profile-edit-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 36px;
+}
+.profile-edit-back {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text2);
+  transition: all var(--tr);
+}
+.profile-edit-back:hover { color: var(--accent); border-color: var(--border2); }
+
+.profile-avatar-editor {
+  display: flex; align-items: center; gap: 20px;
+  padding: 20px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+}
+
+.avatar-upload-area {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  border: 2px dashed var(--border2);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all var(--tr);
+  overflow: hidden; position: relative;
+  flex-shrink: 0;
+}
+.avatar-upload-area:hover { border-color: var(--accent); }
+.avatar-upload-area img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+}
+.avatar-upload-area .upload-icon {
+  width: 24px; height: 24px; color: var(--text3);
+  transition: color var(--tr);
+}
+.avatar-upload-area:hover .upload-icon { color: var(--accent); }
+.avatar-upload-hint { font-size: 0.7rem; color: var(--text3); text-align: center; }
+
+.avatar-presets {
+  display: flex; flex-wrap: wrap; gap: 8px; flex: 1;
+}
+.avatar-preset {
+  width: 44px; height: 44px;
+  border-radius: 50%; cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color var(--tr), transform var(--tr);
+  object-fit: cover;
+}
+.avatar-preset:hover { transform: scale(1.1); }
+.avatar-preset.selected { border-color: var(--accent); }
+
+/* ─── Profile form ───────────────────────── */
+.profile-edit-form { display: flex; flex-direction: column; gap: 16px; }
+
+.profile-edit-section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.85rem; font-weight: 700;
+  color: var(--text2);
+  padding-top: 8px;
+  border-top: 1px solid var(--border3);
+}
+
+.color-theme-picker {
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.color-swatch {
+  width: 32px; height: 32px;
+  border-radius: 50%; cursor: pointer;
+  border: 2px solid transparent;
+  transition: all var(--tr);
+}
+.color-swatch:hover { transform: scale(1.15); }
+.color-swatch.selected { border-color: var(--text); }

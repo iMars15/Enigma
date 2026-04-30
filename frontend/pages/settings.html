@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enigma — Настройки</title>
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/chat.css">
+<link rel="stylesheet" href="../css/settings.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ── Left icon nav ── -->
+  <nav class="app-nav">
+    <div class="app-nav-logo">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20" color="#07090d">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+      </svg>
+    </div>
+    <button class="nav-icon-btn" id="btn-back-to-app" title="Чаты">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+      </svg>
+    </button>
+    <div class="nav-spacer"></div>
+    <button class="nav-icon-btn active" title="Настройки">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- ── Main settings panel ── -->
+  <div class="settings-panel" style="flex:1;overflow:hidden">
+
+    <!-- Settings nav -->
+    <nav class="settings-nav">
+      <div style="font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:4px 12px 8px">Настройки</div>
+
+      <button class="settings-nav-item active" data-section="notifications">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+        </svg>
+        Уведомления
+      </button>
+
+      <button class="settings-nav-item" data-section="appearance">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.42 17.479c-1.84-1.84-1.84-4.822 0-6.663l5.66-5.659a4.5 4.5 0 016.364 6.364L14.5 15.5m-5.304 4.402a3.75 3.75 0 01-5.304-5.304"/>
+        </svg>
+        Внешний вид
+      </button>
+
+      <button class="settings-nav-item" data-section="privacy">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+        </svg>
+        Приватность
+      </button>
+
+      <button class="settings-nav-item" data-section="security">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+        </svg>
+        Безопасность
+      </button>
+
+      <button class="settings-nav-item" data-section="storage">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/>
+        </svg>
+        Хранилище
+      </button>
+
+      <div class="settings-nav-divider"></div>
+
+      <button class="settings-nav-item" data-section="about">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+        </svg>
+        О приложении
+      </button>
+
+      <div class="settings-nav-divider"></div>
+
+      <button class="settings-nav-item" id="btn-logout" style="color:var(--danger)">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/>
+        </svg>
+        Выйти
+      </button>
+    </nav>
+
+    <!-- Settings content -->
+    <div class="settings-content">
+
+      <!-- ── Notifications ── -->
+      <div class="settings-section active" id="section-notifications">
+        <div class="settings-section-title">Уведомления</div>
+
+        <div class="settings-group">
+          <div class="settings-group-label">Основные</div>
+
+          <div class="settings-row">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Push-уведомления</div>
+              <div class="settings-row-desc">Уведомления о новых сообщениях</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-notifications" checked>
+              <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.757 3.63 8.25 4.51 8.25H6.75z"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Звук уведомлений</div>
+              <div class="settings-row-desc">Воспроизводить звук при получении</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-notif-sound" checked>
+              <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Предпросмотр сообщений</div>
+              <div class="settings-row-desc">Показывать текст в уведомлении</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-notif-preview" checked>
+              <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            </label>
+          </div>
+        </div>
+
+        <button class="btn btn-ghost btn-sm" id="btn-request-notif">
+          Запросить разрешение браузера
+        </button>
+
+        <div class="notif-preview" style="margin-top:16px">
+          <div class="notif-preview-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="notif-preview-title">Enigma</div>
+            <div class="notif-preview-body">Алексей: Привет, как дела?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Appearance ── -->
+      <div class="settings-section" id="section-appearance">
+        <div class="settings-section-title">Внешний вид</div>
+
+        <div class="settings-group">
+          <div class="settings-group-label">Акцентный цвет</div>
+          <div class="settings-row" style="flex-wrap:wrap;gap:8px">
+            <div class="color-theme-picker" style="flex-wrap:wrap;display:flex;gap:10px;padding:4px 0">
+              <div class="color-swatch selected" data-color="#00d28c" style="background:#00d28c;width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent" title="Зелёный"></div>
+              <div class="color-swatch" data-color="#1e90ff" style="background:#1e90ff;width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent" title="Синий"></div>
+              <div class="color-swatch" data-color="#a855f7" style="background:#a855f7;width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent" title="Фиолетовый"></div>
+              <div class="color-swatch" data-color="#f97316" style="background:#f97316;width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent" title="Оранжевый"></div>
+              <div class="color-swatch" data-color="#ec4899" style="background:#ec4899;width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent" title="Розовый"></div>
+              <div class="color-swatch" data-color="#eab308" style="background:#eab308;width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent" title="Жёлтый"></div>
+              <div class="color-swatch" data-color="#ef4444" style="background:#ef4444;width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent" title="Красный"></div>
+              <div class="color-swatch" data-color="#06b6d4" style="background:#06b6d4;width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent" title="Голубой"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-group-label">Текст</div>
+          <div class="settings-row">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Размер шрифта</div>
+              <div class="settings-row-desc">Размер текста в интерфейсе</div>
+            </div>
+            <select class="settings-select" id="select-font-size">
+              <option value="small">Маленький</option>
+              <option value="medium" selected>Средний</option>
+              <option value="large">Большой</option>
+            </select>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Язык интерфейса</div>
+            </div>
+            <select class="settings-select" id="select-language">
+              <option value="ru" selected>Русский</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Privacy ── -->
+      <div class="settings-section" id="section-privacy">
+        <div class="settings-section-title">Приватность</div>
+
+        <div class="settings-group">
+          <div class="settings-group-label">Видимость</div>
+
+          <div class="settings-row">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Показывать статус «В сети»</div>
+              <div class="settings-row-desc">Другие увидят, когда ты онлайн</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-online-status" checked>
+              <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Подтверждения прочтения</div>
+              <div class="settings-row-desc">Показывать галочки прочтения</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-read-receipts" checked>
+              <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Статус набора текста</div>
+              <div class="settings-row-desc">Показывать «печатает...»</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-typing-status" checked>
+              <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Security ── -->
+      <div class="settings-section" id="section-security">
+        <div class="settings-section-title">Безопасность</div>
+
+        <div class="settings-group">
+          <div class="settings-group-label">Аккаунт</div>
+
+          <div class="settings-row settings-row-clickable" onclick="window.location.href='profile.html'">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Редактировать профиль</div>
+              <div class="settings-row-desc">Имя, аватар, статус, пароль</div>
+            </div>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16" style="color:var(--text3)">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+            </svg>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Двухфакторная аутентификация</div>
+              <div class="settings-row-desc">Дополнительная защита входа</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-2fa">
+              <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-danger-zone">
+          <div class="settings-danger-title">⚠ Опасная зона</div>
+          <button class="btn btn-danger btn-sm" id="btn-delete-account">
+            Удалить аккаунт навсегда
+          </button>
+        </div>
+      </div>
+
+      <!-- ── Storage ── -->
+      <div class="settings-section" id="section-storage">
+        <div class="settings-section-title">Хранилище и данные</div>
+
+        <div class="settings-group">
+          <div class="settings-group-label">Кэш</div>
+          <div class="settings-row">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Очистить кэш</div>
+              <div class="settings-row-desc">Временные файлы и изображения</div>
+            </div>
+            <button class="btn btn-ghost btn-sm" id="btn-clear-cache">Очистить</button>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-group-label">Данные</div>
+          <div class="settings-row">
+            <div class="settings-row-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="17" height="17">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">Экспорт данных</div>
+              <div class="settings-row-desc">Скачать историю сообщений</div>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="UI.Toast.info('Экспорт запущен...')">Экспорт</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── About ── -->
+      <div class="settings-section" id="section-about">
+        <div class="settings-section-title">О приложении</div>
+
+        <div class="settings-group">
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Enigma</div>
+              <div class="settings-row-desc">Версия 1.0.0</div>
+            </div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Технологии</div>
+              <div class="settings-row-desc">PHP, WebSocket, WebRTC, HTML/CSS/JS</div>
+            </div>
+          </div>
+          <div class="settings-row settings-row-clickable" onclick="window.open('https://github.com','_blank')">
+            <div class="settings-row-icon">
+              <svg fill="currentColor" viewBox="0 0 24 24" width="17" height="17" style="color:var(--accent)">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </div>
+            <div class="settings-row-info">
+              <div class="settings-row-label">GitHub</div>
+              <div class="settings-row-desc">Исходный код проекта</div>
+            </div>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16" style="color:var(--text3)">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/settings.js"></script>
+</body>
+</html>
