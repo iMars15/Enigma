@@ -1,0 +1,170 @@
+.call-actions,
+.header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.soft-btn,
+.danger-btn {
+  min-height: 38px;
+  border-radius: 6px;
+  padding: 0 14px;
+  font-weight: 800;
+}
+
+.danger-btn {
+  background: rgba(255, 95, 112, .14);
+  color: #ffd8de;
+  border-color: rgba(255, 95, 112, .35);
+}
+
+dialog {
+  width: min(440px, calc(100vw - 28px));
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, .62);
+}
+
+.dialog-card {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+}
+
+.dialog-card h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.profile-strip {
+  min-height: 76px;
+  padding: 12px;
+  border-top: 1px solid var(--line);
+  background: #08100b;
+}
+
+.profile-strip > div:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+}
+
+.profile-strip strong,
+.profile-strip span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-strip span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.message p {
+  margin: 3px 0 0;
+  color: #dcebe1;
+  overflow-wrap: anywhere;
+  line-height: 1.45;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.auth-card,
+.dialog-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(8, 15, 10, .92);
+  box-shadow: var(--shadow);
+}
+
+.auth-card {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+}
+
+.tag,
+.soft-btn,
+.icon-btn,
+.circle-action,
+.danger-btn {
+  border: 1px solid transparent;
+  color: var(--text);
+  background: var(--soft);
+  transition: .16s ease;
+}
+
+.tab,
+.soft-btn,
+.icon-btn,
+.circle-action,
+.danger-btn {
+  border: 1px solid transparent;
+  color: var(--text);
+  background: var(--soft);
+  transition: .16s ease;
+}
+
+.tab {
+  height: 42px;
+}
+
+.tab.active,
+.soft-btn:hover,
+.icon-btn:hover,
+.circle-action:hover {
+  border-color: rgba(22, 242, 154, .35);
+  background: #203828;
+}
+
+.primary-btn {
+  min-height: 46px;
+  border: 0;
+  border-radius: 6px;
+  padding: 0 18px;
+  color: #03130b;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  font-weight: 900;
+}
+
+.user-card {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.user-card strong {
+  display: block;
+  font-size: 13px;
+}
+
+.user-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.small-btn {
+  min-width: auto;
+  padding: 6px 12px;
+  font-size: 12px;
+}

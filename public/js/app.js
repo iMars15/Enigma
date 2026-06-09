@@ -1,0 +1,754 @@
+const translations = {
+  ru: {
+    heroEyebrow: 'Открытый мессенджер',
+    heroCopy: 'Быстрые комнаты, живые звонки и тёмный интерфейс для командной работы без лишнего шума.',
+    language: 'Язык интерфейса',
+    signIn: 'Вход',
+    createAccount: 'Создать',
+    username: 'Имя пользователя',
+    displayName: 'Отображаемое имя',
+    displayNamePlaceholder: 'Шифровальщик',
+    password: 'Пароль',
+    enterEnigma: 'Войти в Enigma',
+    demoAccount: 'Демо-аккаунт: demo / enigma123',
+    homeTitle: 'Главная Enigma',
+    createServer: 'Создать сервер',
+    createChannel: 'Создать канал',
+    server: 'Сервер',
+    settings: 'Настройки',
+    channel: 'Канал',
+    startCall: 'Начать звонок',
+    logout: 'Выйти',
+    liveRoom: 'Живая комната',
+    leave: 'Выйти',
+    messageDefaultPlaceholder: 'Сообщение #общий',
+    send: 'Отправить',
+    signal: 'Сигнал',
+    socket: 'Сокет',
+    profileAccent: 'Акцент профиля',
+    profileSettings: 'Настройки профиля',
+    status: 'Статус',
+    avatarUrl: 'URL аватара',
+    accentColor: 'Цвет акцента',
+    saveProfile: 'Сохранить профиль',
+    name: 'Название',
+    create: 'Создать',
+    defaultGuild: 'Штаб Enigma',
+    defaultChannel: 'общий',
+    online: 'В сети',
+    requestFailed: 'Запрос не выполнен.',
+    socketConnecting: 'Подключение',
+    socketOnline: 'Онлайн',
+    socketOffline: 'Офлайн',
+    socketDisconnected: 'Сокет отключён',
+    realtimeConnected: 'Связь в реальном времени подключена',
+    profileUpdated: 'Профиль обновлён',
+    inCall: 'В звонке',
+    joinedCall: 'Вы вошли в звонок',
+    waitingPeers: 'Ожидание участников',
+    peerJoined: '{name} присоединился',
+    micOn: 'Микрофон включён',
+    micOff: 'Микрофон выключен',
+    cameraOn: 'Камера включена',
+    cameraOff: 'Камера выключена',
+    directMessages: 'Личные чаты',
+    chatWith: 'Чат'
+  },
+  en: {
+    heroEyebrow: 'Open source messenger',
+    heroCopy: 'Fast rooms, live calls, and a dark interface for focused team work.',
+    language: 'Interface language',
+    signIn: 'Sign in',
+    createAccount: 'Create',
+    username: 'Username',
+    displayName: 'Display name',
+    displayNamePlaceholder: 'Cipher Runner',
+    password: 'Password',
+    enterEnigma: 'Enter Enigma',
+    demoAccount: 'Demo account: demo / enigma123',
+    homeTitle: 'Enigma Home',
+    createServer: 'Create server',
+    createChannel: 'Create channel',
+    server: 'Server',
+    settings: 'Settings',
+    channel: 'Channel',
+    startCall: 'Start call',
+    logout: 'Log out',
+    liveRoom: 'Live room',
+    leave: 'Leave',
+    messageDefaultPlaceholder: 'Message #general',
+    send: 'Send',
+    signal: 'Signal',
+    socket: 'Socket',
+    profileAccent: 'Profile accent',
+    profileSettings: 'Profile settings',
+    status: 'Status',
+    avatarUrl: 'Avatar URL',
+    accentColor: 'Accent color',
+    saveProfile: 'Save profile',
+    name: 'Name',
+    create: 'Create',
+    defaultGuild: 'Enigma HQ',
+    defaultChannel: 'general',
+    online: 'Online',
+    requestFailed: 'Request failed.',
+    socketConnecting: 'Connecting',
+    socketOnline: 'Online',
+    socketOffline: 'Offline',
+    socketDisconnected: 'Socket disconnected',
+    realtimeConnected: 'Realtime connected',
+    profileUpdated: 'Profile updated',
+    inCall: 'In call',
+    joinedCall: 'Joined call',
+    waitingPeers: 'Waiting for peers',
+    peerJoined: '{name} joined',
+    micOn: 'Mic on',
+    micOff: 'Mic off',
+    cameraOn: 'Camera on',
+    cameraOff: 'Camera off'
+  }
+};
+
+const state = {
+  user: null,
+  guilds: [],
+  users: [],
+  currentGuildId: null,
+  currentChannelId: null,
+  socket: null,
+  wsConfig: { host: '26.245.247.193', port: 3001 },
+  language: localStorage.getItem('enigma-language') || 'ru',
+  socketStatus: 'offline',
+  callStatus: { type: 'waiting', count: 0, name: '' },
+  authMode: 'login',
+  localStream: null,
+  peers: new Map(),
+  micOn: true,
+  camOn: true
+};
+
+const $ = (selector) => document.querySelector(selector);
+const app = $('#app');
+const authScreen = $('#authScreen');
+const workspace = $('#workspace');
+const authForm = $('#authForm');
+const guildList = $('#guildList');
+const channelList = $('#channelList');
+const messages = $('#messages');
+const activityLog = $('#activityLog');
+const messageForm = $('#messageForm');
+const messageInput = $('#messageInput');
+const settingsDialog = $('#settingsDialog');
+const settingsForm = $('#settingsForm');
+const textDialog = $('#textDialog');
+const textForm = $('#textForm');
+const memberList = $('#memberList');
+const languageSelects = [$('#authLanguageSelect'), $('#settingsLanguageSelect')].filter(Boolean);
+
+function t(key, params = {}) {
+  const dictionary = translations[state.language] || translations.ru;
+  const template = dictionary[key] || translations.ru[key] || key;
+
+  return Object.entries(params).reduce(
+    (value, [param, replacement]) => value.replaceAll(`{${param}}`, replacement),
+    template
+  );
+}
+
+function messagePlaceholder(channelName = currentChannel()?.name) {
+  return state.language === 'en'
+    ? `Message #${channelName || t('defaultChannel')}`
+    : `Сообщение #${channelName || t('defaultChannel')}`;
+}
+
+function peerCountText(count) {
+  if (state.language === 'en') {
+    return `${count} peer${count === 1 ? '' : 's'} in room`;
+  }
+
+  return `${count} ${peerWord(count)} в комнате`;
+}
+
+function setLanguage(language) {
+  state.language = translations[language] ? language : 'ru';
+  localStorage.setItem('enigma-language', state.language);
+  applyLanguage();
+}
+
+function applyLanguage() {
+  document.documentElement.lang = state.language;
+  document.querySelectorAll('[data-i18n]').forEach((element) => {
+    element.textContent = t(element.dataset.i18n);
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach((element) => {
+    element.title = t(element.dataset.i18nTitle);
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+    element.placeholder = t(element.dataset.i18nPlaceholder);
+  });
+  languageSelects.forEach((select) => {
+    select.value = state.language;
+  });
+
+  if ($('#authNote')?.dataset.i18n === 'demoAccount') {
+    $('#authNote').textContent = t('demoAccount');
+  }
+
+  renderProfile();
+  renderChannels();
+  updateChannelHeader();
+  updateSocketState();
+  updateCallControls();
+  updateCallStatus();
+}
+
+async function api(path, options = {}) {
+  const response = await fetch(path, {
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    ...options,
+    body: options.body ? JSON.stringify(options.body) : undefined
+  });
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || t('requestFailed'));
+  }
+
+  return data;
+}
+
+function log(message) {
+  const item = document.createElement('div');
+  item.textContent = `${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} ${message}`;
+  activityLog.prepend(item);
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  }[char]));
+}
+
+function initials(user) {
+  return (user?.display_name || user?.username || 'E').trim().charAt(0).toUpperCase();
+}
+
+function setAvatar(element, user) {
+  element.textContent = initials(user);
+  element.style.backgroundColor = user?.accent_color || 'var(--accent)';
+  element.style.backgroundImage = user?.avatar_url ? `url("${user.avatar_url}")` : '';
+}
+
+function showWorkspace() {
+  app.dataset.view = 'workspace';
+  authScreen.classList.add('hidden');
+  workspace.classList.remove('hidden');
+}
+
+function showAuth() {
+  app.dataset.view = 'auth';
+  workspace.classList.add('hidden');
+  authScreen.classList.remove('hidden');
+}
+
+function renderProfile() {
+  if (!state.user) {
+    return;
+  }
+
+  $('#profileName').textContent = state.user.display_name;
+  $('#profileStatus').textContent = state.user.status_text || t('online');
+  $('#accentPreview').textContent = state.user.accent_color;
+  document.documentElement.style.setProperty('--accent', state.user.accent_color);
+  setAvatar($('#profileAvatar'), state.user);
+}
+
+function renderGuilds() {
+  guildList.innerHTML = state.guilds.map((guild) => `
+    <button class="guild-logo ${guild.id === state.currentGuildId ? 'active' : ''}" data-guild-id="${guild.id}" title="${escapeHtml(guild.name)}">
+      ${escapeHtml(guild.icon_text || guild.name.charAt(0))}
+    </button>
+  `).join('');
+
+  guildList.querySelectorAll('[data-guild-id]').forEach((button) => {
+    button.addEventListener('click', () => selectGuild(Number(button.dataset.guildId)));
+  });
+}
+
+function renderChannels() {
+  const guild = currentGuild();
+  $('#guildName').textContent = guild?.name || t('defaultGuild');
+  channelList.innerHTML = (guild?.channels || []).map((channel) => `
+    <button class="channel-btn ${channel.id === state.currentChannelId ? 'active' : ''}" data-channel-id="${channel.id}">
+      <span>#</span><span>${escapeHtml(channel.name)}</span>
+    </button>
+  `).join('');
+
+  channelList.querySelectorAll('[data-channel-id]').forEach((button) => {
+    button.addEventListener('click', () => selectChannel(Number(button.dataset.channelId)));
+  });
+}
+
+function updateChannelHeader() {
+  const channel = currentChannel();
+  $('#channelName').textContent = channel?.name || t('defaultChannel');
+  messageInput.placeholder = messagePlaceholder(channel?.name);
+}
+
+function currentGuild() {
+  return state.guilds.find((guild) => guild.id === state.currentGuildId);
+}
+
+function currentChannel() {
+  return currentGuild()?.channels.find((channel) => channel.id === state.currentChannelId);
+}
+
+function renderMembers() {
+  if (!memberList) {
+    return;
+  }
+
+  memberList.innerHTML = state.users.map((user) => `
+    <div class="user-card">
+      <div class="avatar" style="background-color: ${escapeHtml(user.accent_color || '#16f29a')};">${escapeHtml(user.display_name.charAt(0) || user.username.charAt(0))}</div>
+      <div>
+        <strong>${escapeHtml(user.display_name)}</strong>
+        <span>@${escapeHtml(user.username)}</span>
+      </div>
+      <button class="soft-btn small-btn" type="button" data-user-id="${user.id}">${t('chatWith')}</button>
+    </div>
+  `).join('');
+
+  memberList.querySelectorAll('[data-user-id]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const targetId = Number(button.dataset.userId);
+      await openDirectChat(targetId);
+    });
+  });
+}
+
+async function loadUsers() {
+  const data = await api('/api/users.php');
+  state.users = data.users;
+  renderMembers();
+}
+
+async function openDirectChat(userId) {
+  const data = await api('/api/dms.php', {
+    method: 'POST',
+    body: { user_id: userId }
+  });
+
+  state.currentGuildId = data.guild_id;
+  state.currentChannelId = data.channel_id;
+  await loadGuilds();
+  await selectChannel(state.currentChannelId);
+}
+
+async function loadGuilds() {
+  const data = await api('/api/guilds.php');
+  state.guilds = data.guilds;
+  state.currentGuildId = state.currentGuildId || state.guilds[0]?.id || null;
+  state.currentChannelId = state.currentChannelId || currentGuild()?.channels[0]?.id || null;
+  renderGuilds();
+  renderChannels();
+}
+
+async function selectGuild(guildId) {
+  state.currentGuildId = guildId;
+  state.currentChannelId = currentGuild()?.channels[0]?.id || null;
+  renderGuilds();
+  renderChannels();
+  await selectChannel(state.currentChannelId);
+}
+
+async function selectChannel(channelId) {
+  if (!channelId) {
+    return;
+  }
+
+  state.currentChannelId = channelId;
+  updateChannelHeader();
+  renderChannels();
+
+  state.socket?.send(JSON.stringify({ type: 'subscribe', channel_id: channelId }));
+  const data = await api(`/api/messages.php?channel_id=${channelId}`);
+  messages.innerHTML = '';
+  data.messages.forEach(renderMessage);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function renderMessage(message) {
+  const row = document.createElement('article');
+  row.className = 'message';
+  row.dataset.messageId = message.id;
+  const user = {
+    display_name: message.display_name,
+    username: message.username,
+    avatar_url: message.avatar_url,
+    accent_color: message.accent_color
+  };
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  setAvatar(avatar, user);
+
+  row.innerHTML = `
+    <div></div>
+    <div>
+      <div class="message-meta" style="--author-color:${escapeHtml(message.accent_color || '#16f29a')}">
+        <strong>${escapeHtml(message.display_name)}</strong>
+        <time>${new Date(`${message.created_at}Z`).toLocaleString(state.language === 'en' ? 'en-US' : 'ru-RU', { hour: '2-digit', minute: '2-digit', month: 'short', day: 'numeric' })}</time>
+      </div>
+      <p>${escapeHtml(message.content)}</p>
+    </div>
+  `;
+  row.firstElementChild.replaceWith(avatar);
+  messages.append(row);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function setSocketStatus(status) {
+  state.socketStatus = status;
+  updateSocketState();
+}
+
+function updateSocketState() {
+  const key = {
+    connecting: 'socketConnecting',
+    online: 'socketOnline',
+    offline: 'socketOffline'
+  }[state.socketStatus] || 'socketOffline';
+
+  $('#socketState').textContent = t(key);
+}
+
+async function loadAppConfig() {
+  try {
+    const data = await api('/api/config.php');
+    state.wsConfig.host = data.ws_host || state.wsConfig.host;
+    state.wsConfig.port = Number(data.ws_port || state.wsConfig.port);
+  } catch (error) {
+    log(error.message);
+  }
+}
+
+function connectSocket() {
+  state.socket?.close();
+  state.socket = new WebSocket(`ws://${state.wsConfig.host}:${state.wsConfig.port}`);
+  setSocketStatus('connecting');
+
+  state.socket.addEventListener('open', () => {
+    setSocketStatus('online');
+    state.socket.send(JSON.stringify({ type: 'hello', user_id: state.user.id }));
+    if (state.currentChannelId) {
+      state.socket.send(JSON.stringify({ type: 'subscribe', channel_id: state.currentChannelId }));
+    }
+  });
+
+  state.socket.addEventListener('close', (ev) => {
+    setSocketStatus('offline');
+    log(`${t('socketDisconnected')} (code=${ev?.code || 'unknown'})`);
+    // attempt reconnect
+    scheduleReconnect();
+  });
+
+  state.socket.addEventListener('error', (ev) => {
+    console.warn('WS error', ev);
+    log('WebSocket error');
+  });
+
+  state.socket.addEventListener('message', async (event) => {
+    const payload = JSON.parse(event.data);
+    if (payload.type === 'ready') log(t('realtimeConnected'));
+    if (payload.type === 'error') log(payload.error);
+    if (payload.type === 'message:new' && payload.message.channel_id === state.currentChannelId) renderMessage(payload.message);
+    if (payload.type === 'call:peers') handleCallPeers(payload.peers);
+    if (payload.type === 'call:peer-joined') handlePeerJoined(payload.peer);
+    if (payload.type === 'call:peer-left') removePeer(payload.user_id);
+    if (payload.type === 'webrtc:offer') handleOffer(payload);
+    if (payload.type === 'webrtc:answer') handleAnswer(payload);
+    if (payload.type === 'webrtc:ice') handleIce(payload);
+  });
+}
+
+let reconnectAttempts = 0;
+function scheduleReconnect() {
+  reconnectAttempts += 1;
+  const delay = Math.min(30000, 1000 * 2 ** Math.min(reconnectAttempts, 6));
+  console.log(`Reconnecting socket in ${delay}ms (attempt ${reconnectAttempts})`);
+  setTimeout(() => {
+    connectSocket();
+  }, delay);
+}
+
+async function bootstrap() {
+  try {
+    const data = await api('/api/auth.php?action=me');
+    if (!data.user) {
+      showAuth();
+      return;
+    }
+
+    state.user = data.user;
+    showWorkspace();
+    renderProfile();
+    await loadAppConfig();
+    await loadGuilds();
+    await loadUsers();
+    connectSocket();
+    await selectChannel(state.currentChannelId);
+  } catch {
+    showAuth();
+  }
+}
+
+document.querySelectorAll('[data-auth-mode]').forEach((button) => {
+  button.addEventListener('click', () => {
+    state.authMode = button.dataset.authMode;
+    document.querySelectorAll('[data-auth-mode]').forEach((tab) => tab.classList.toggle('active', tab === button));
+    document.querySelectorAll('.register-only').forEach((field) => field.classList.toggle('hidden', state.authMode !== 'register'));
+  });
+});
+
+authForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const form = new FormData(authForm);
+
+  try {
+    const data = await api(`/api/auth.php?action=${state.authMode}`, {
+      method: 'POST',
+      body: Object.fromEntries(form.entries())
+    });
+    state.user = data.user;
+    showWorkspace();
+    renderProfile();
+    await loadAppConfig();
+    await loadGuilds();
+    await loadUsers();
+    connectSocket();
+    await selectChannel(state.currentChannelId);
+  } catch (error) {
+    $('#authNote').textContent = error.message;
+  }
+});
+
+messageForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const content = messageInput.value.trim();
+  if (!content || !state.socket || state.socket.readyState !== WebSocket.OPEN) return;
+  state.socket.send(JSON.stringify({ type: 'message:create', channel_id: state.currentChannelId, content }));
+  messageInput.value = '';
+});
+
+$('#logoutBtn').addEventListener('click', async () => {
+  await api('/api/auth.php?action=logout', { method: 'POST' });
+  state.socket?.close();
+  location.reload();
+});
+
+$('#settingsBtn').addEventListener('click', () => {
+  settingsForm.display_name.value = state.user.display_name;
+  settingsForm.status_text.value = state.user.status_text || '';
+  settingsForm.avatar_url.value = state.user.avatar_url || '';
+  settingsForm.accent_color.value = state.user.accent_color || '#16f29a';
+  settingsDialog.showModal();
+});
+
+settingsForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const data = await api('/api/profile.php', {
+    method: 'POST',
+    body: Object.fromEntries(new FormData(settingsForm).entries())
+  });
+  state.user = data.user;
+  renderProfile();
+  settingsDialog.close();
+  log(t('profileUpdated'));
+});
+
+function openTextDialog(title, onSubmit) {
+  $('#textDialogTitle').textContent = title;
+  textForm.reset();
+  textDialog.showModal();
+  textForm.onsubmit = async (event) => {
+    event.preventDefault();
+    await onSubmit(textForm.name.value);
+    textDialog.close();
+  };
+}
+
+$('#createGuildBtn').addEventListener('click', () => {
+  openTextDialog(t('createServer'), async (name) => {
+    await api('/api/guilds.php', { method: 'POST', body: { name } });
+    state.currentGuildId = null;
+    state.currentChannelId = null;
+    await loadGuilds();
+    await selectChannel(state.currentChannelId);
+  });
+});
+
+$('#createChannelBtn').addEventListener('click', () => {
+  openTextDialog(t('createChannel'), async (name) => {
+    await api('/api/channels.php', { method: 'POST', body: { name, guild_id: state.currentGuildId } });
+    await loadGuilds();
+    renderChannels();
+  });
+});
+
+async function startCall() {
+  if (state.localStream) return;
+
+  state.localStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+  $('#localVideo').srcObject = state.localStream;
+  $('#callPanel').classList.remove('hidden');
+  $('#callBtn').textContent = t('inCall');
+  state.socket.send(JSON.stringify({ type: 'call:join', channel_id: state.currentChannelId }));
+  log(t('joinedCall'));
+}
+
+function stopCall() {
+  state.socket?.send(JSON.stringify({ type: 'call:leave' }));
+  state.localStream?.getTracks().forEach((track) => track.stop());
+  state.localStream = null;
+  state.peers.forEach((peer) => peer.connection.close());
+  state.peers.clear();
+  document.querySelectorAll('video[data-peer-id]').forEach((video) => video.remove());
+  $('#callPanel').classList.add('hidden');
+  setCallStatus('waiting');
+  updateCallControls();
+}
+
+function createPeerConnection(userId) {
+  if (state.peers.has(userId)) return state.peers.get(userId).connection;
+
+  const connection = new RTCPeerConnection({
+    iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+  });
+
+  state.localStream?.getTracks().forEach((track) => connection.addTrack(track, state.localStream));
+
+  connection.onicecandidate = (event) => {
+    if (event.candidate) {
+      state.socket.send(JSON.stringify({ type: 'webrtc:ice', target_user_id: userId, candidate: event.candidate }));
+    }
+  };
+
+  connection.ontrack = (event) => {
+    let video = document.querySelector(`video[data-peer-id="${userId}"]`);
+    if (!video) {
+      video = document.createElement('video');
+      video.autoplay = true;
+      video.playsInline = true;
+      video.dataset.peerId = String(userId);
+      $('#videoGrid').append(video);
+    }
+    video.srcObject = event.streams[0];
+  };
+
+  state.peers.set(userId, { connection });
+  return connection;
+}
+
+async function callPeer(userId) {
+  const connection = createPeerConnection(userId);
+  const offer = await connection.createOffer();
+  await connection.setLocalDescription(offer);
+  state.socket.send(JSON.stringify({ type: 'webrtc:offer', target_user_id: userId, offer }));
+}
+
+function handleCallPeers(peers) {
+  setCallStatus('peers', { count: peers.length });
+  peers.forEach((peer) => callPeer(peer.user_id));
+}
+
+function handlePeerJoined(peer) {
+  setCallStatus('joined', { name: peer.display_name });
+  if (state.localStream) callPeer(peer.id);
+}
+
+function setCallStatus(type, payload = {}) {
+  state.callStatus = { type, count: payload.count || 0, name: payload.name || '' };
+  updateCallStatus();
+}
+
+function updateCallStatus() {
+  if (state.callStatus.type === 'peers' && state.callStatus.count > 0) {
+    $('#callStatus').textContent = peerCountText(state.callStatus.count);
+    return;
+  }
+
+  if (state.callStatus.type === 'joined' && state.callStatus.name) {
+    $('#callStatus').textContent = t('peerJoined', { name: state.callStatus.name });
+    return;
+  }
+
+  $('#callStatus').textContent = t('waitingPeers');
+}
+
+function updateCallControls() {
+  $('#callBtn').textContent = state.localStream ? t('inCall') : t('startCall');
+  $('#toggleMicBtn').textContent = state.micOn ? t('micOn') : t('micOff');
+  $('#toggleCamBtn').textContent = state.camOn ? t('cameraOn') : t('cameraOff');
+}
+
+function peerWord(count) {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) return 'участник';
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'участника';
+  return 'участников';
+}
+
+async function handleOffer(payload) {
+  if (!state.localStream) {
+    await startCall();
+  }
+  const connection = createPeerConnection(payload.from_user_id);
+  await connection.setRemoteDescription(payload.offer);
+  const answer = await connection.createAnswer();
+  await connection.setLocalDescription(answer);
+  state.socket.send(JSON.stringify({ type: 'webrtc:answer', target_user_id: payload.from_user_id, answer }));
+}
+
+async function handleAnswer(payload) {
+  const peer = state.peers.get(payload.from_user_id);
+  if (peer) {
+    await peer.connection.setRemoteDescription(payload.answer);
+  }
+}
+
+async function handleIce(payload) {
+  const peer = state.peers.get(payload.from_user_id);
+  if (peer && payload.candidate) {
+    await peer.connection.addIceCandidate(payload.candidate);
+  }
+}
+
+function removePeer(userId) {
+  const peer = state.peers.get(userId);
+  if (peer) {
+    peer.connection.close();
+    state.peers.delete(userId);
+  }
+  document.querySelector(`video[data-peer-id="${userId}"]`)?.remove();
+}
+
+$('#callBtn').addEventListener('click', () => startCall().catch((error) => log(error.message)));
+$('#leaveCallBtn').addEventListener('click', stopCall);
+$('#toggleMicBtn').addEventListener('click', () => {
+  state.micOn = !state.micOn;
+  state.localStream?.getAudioTracks().forEach((track) => { track.enabled = state.micOn; });
+  updateCallControls();
+});
+$('#toggleCamBtn').addEventListener('click', () => {
+  state.camOn = !state.camOn;
+  state.localStream?.getVideoTracks().forEach((track) => { track.enabled = state.camOn; });
+  updateCallControls();
+});
+
+bootstrap();
