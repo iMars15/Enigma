@@ -1,8 +1,8 @@
 <section class="auth-screen" id="authScreen">
   <div class="brand-panel">
-    <div class="brand-mark">E</div>
+    <div class="brand-mark" role="button" tabindex="0" title="Открыть Enigma">E</div>
     <p class="eyebrow" data-i18n="heroEyebrow">Открытый мессенджер</p>
-    <h1>Enigma</h1>
+    <h1><span class="brand-name">nigma</span></h1>
     <p class="brand-copy" data-i18n="heroCopy">Быстрые комнаты, живые звонки и тёмный интерфейс для командной работы без лишнего шума.</p>
     <div class="signal-lines" aria-hidden="true">
       <span></span><span></span><span></span><span></span>

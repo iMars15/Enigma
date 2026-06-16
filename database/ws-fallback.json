@@ -1,0 +1,26 @@
+{
+  "messages": [
+    {
+      "id": 1781561822609,
+      "channel_id": 1,
+      "content": "Тестовое сообщение",
+      "created_at": "2026-06-15T22:17:02.609Z",
+      "user_id": 1,
+      "username": "user-1",
+      "display_name": "Пользователь 1",
+      "avatar_url": "",
+      "accent_color": "#16f29a"
+    },
+    {
+      "id": 1781561918832,
+      "channel_id": 1,
+      "content": "Улучшенная кнопка отправки",
+      "created_at": "2026-06-15T22:18:38.832Z",
+      "user_id": 1,
+      "username": "user-1",
+      "display_name": "Пользователь 1",
+      "avatar_url": "",
+      "accent_color": "#16f29a"
+    }
+  ]
+}

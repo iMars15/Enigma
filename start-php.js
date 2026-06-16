@@ -40,20 +40,33 @@ function loadEnv() {
 const env = loadEnv();
 
 // Get host and port with defaults
-const phpHost = env.PHP_HOST || '26.245.247.193';
-const phpPort = env.PHP_PORT || '8000';
+const phpHost = env.PHP_HOST || '127.0.0.1';
+const phpPort = env.PHP_PORT || '8080';
+const publicDir = path.join(__dirname, 'public');
+const routerFile = path.join(__dirname, 'router.php');
 
 console.log(`🚀 Starting PHP server on ${phpHost}:${phpPort}`);
-console.log(`📁 Document root: ${path.join(__dirname, 'public')}`);
-console.log(`🔀 Router: router.php`);
+console.log(`📁 Project root: ${__dirname}`);
+console.log(`📁 Document root: ${publicDir}`);
+console.log(`🔀 Router: ${routerFile}`);
+
+if (!fs.existsSync(publicDir)) {
+  console.error(`❌ Document root not found: ${publicDir}`);
+  process.exit(1);
+}
+
+if (!fs.existsSync(routerFile)) {
+  console.error(`❌ Router file not found: ${routerFile}`);
+  process.exit(1);
+}
 
 // Spawn PHP server
 const php = spawn('php', [
   '-S',
   `${phpHost}:${phpPort}`,
   '-t',
-  'public',
-  'router.php'
+  publicDir,
+  routerFile
 ], {
   cwd: __dirname,
   stdio: 'inherit'
