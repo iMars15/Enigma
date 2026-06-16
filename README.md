@@ -1,6 +1,7 @@
 # Enigma
 
 Enigma — open-source прототип мессенджера в стиле Discord с PHP-бэкендом, Node.js WebSocket-сервером, SQLite-хранилищем и фронтендом на чистых HTML/CSS/JavaScript. В проекте уже есть серверы, каналы, живой обмен сообщениями, настройка профиля и сигналинг для WebRTC-звонков.
+[Enigma!!](enigma-messenger.ru)
 
 ## Стек
 
